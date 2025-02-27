@@ -54,6 +54,10 @@ export class ChatComponent  {
 
     // TODO: Écouter le message pour quitter un channel (lorsque le channel est effacé)
 
+    this.hubConnection.on('deleteChannel', (channel) =>{
+      this.leaveChannel()
+    });
+
     // On se connecte au Hub
     this.hubConnection
       .start()
@@ -82,10 +86,12 @@ export class ChatComponent  {
 
   createChannel(){
     // TODO: Ajouter un invoke
+    this.hubConnection!.invoke('CreateChannel')
   }
 
   deleteChannel(channel: Channel){
     // TODO: Ajouter un invoke
+    this.hubConnection!.invoke('DeleteChannel',channel)
   }
 
   leaveChannel(){
